@@ -1,10 +1,29 @@
 import { Pressable, StyleSheet, View, Text } from "react-native";
 import React, { useState } from "react";
 import { Input, Button } from "@rneui/base";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const signIn = () => {
+    console.log("sign in");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+
+        // console.log("Email: ", user.email);
+        console.log("Email: ", user);
+        // ...
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Input
@@ -25,13 +44,7 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <View>
-        <Button
-          title="Se connecter"
-          onPress={() => {
-            console.log("Bouton clic");
-          }}
-          style={styles.button}
-        />
+        <Button title="Se connecter" onPress={signIn} style={styles.button} />
 
         <Pressable
           onPress={() => navigation.navigate("Inscription")}
