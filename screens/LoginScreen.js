@@ -13,9 +13,8 @@ const LoginScreen = ({ navigation }) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        navigation.replace("Chat"); //Pour ouvrir une nouvelle page sans affiché un boutton retour
 
-        // console.log("Email: ", user.email);
-        console.log("Email: ", user);
         // ...
       })
       .catch((error) => {
